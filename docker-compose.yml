@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  Weatherforecase.Service:
+   image: ${DOCKER_REGISTRY-}ssldemo:v1
+   build:
+    context: ./HTTPSCertDemo
+    dockerfile: Dockerfile
+   environment: 
+    - ASPNETCORE_ENVIRONMENT=Development
+    - ASPNETCORE_URLS=https://+:443;http://+:80
+    - ASPNETCORE_Kestrel__Certificates__Default__Password=Pass@123
+    - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dockerdemo.pfx
+   ports:
+    - "8081:80"
+    - "8082:443"
+   volumes:
+    - ~/.aspnet/https:/https:ro
